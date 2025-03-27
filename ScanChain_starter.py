@@ -166,12 +166,12 @@ async def input_chain(dut, bit_list, ff_index):
 # chain at specified index 
         
 async def output_chain_single(dut, ff_index):
-
-    ######################
-    # TODO: YOUR CODE HERE 
-    ######################
-
-    pass       
+    for _ in range(CHAIN_LENGTH - 1 - ff_index):
+        await step_clock(dut)
+    dut.scan_en.value = 1
+    val = dut.scan_out.value
+    dut.scan_en.value = 0
+    return val
 
 #-----------------------------------------------
 
@@ -202,7 +202,6 @@ async def test(dut):
     # Setup the scan chain object
     chain = setup_chain(FILE_NAME)
 
-    ######################
-    # TODO: YOUR CODE HERE 
-    ######################
+    CHAIN_LENGTH = chain.chain_length
+
 
