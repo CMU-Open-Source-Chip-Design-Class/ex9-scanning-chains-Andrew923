@@ -153,12 +153,13 @@ async def input_chain_single(dut, bit, ff_index):
 #       the specified FF?
         
 async def input_chain(dut, bit_list, ff_index):
-
-    ######################
-    # TODO: YOUR CODE HERE 
-    ######################
-
-    pass
+    dut.scan_en.value = 1
+    for n in bit_list[::-1]:
+        dut.scan_in.value = n
+        await step_clock(dut)
+    for _ in range(ff_index + 1 - len(bit_list)):
+        await step_clock(dut)
+    dut.scan_en.value = 0
 
 #-----------------------------------------------
 
@@ -166,9 +167,9 @@ async def input_chain(dut, bit_list, ff_index):
 # chain at specified index 
         
 async def output_chain_single(dut, ff_index):
+    dut.scan_en.value = 1
     for _ in range(CHAIN_LENGTH - 1 - ff_index):
         await step_clock(dut)
-    dut.scan_en.value = 1
     val = dut.scan_out.value
     dut.scan_en.value = 0
     return val
@@ -181,12 +182,16 @@ async def output_chain_single(dut, ff_index):
 #   for Part H of Task 1
         
 async def output_chain(dut, ff_index, output_length):
+    dut.scan_en.value = 1
+    values = list()
+    for _ in range(CHAIN_LENGTH - 1 - ff_index - output_length):
+        await step_clock(dut)
+    for _ in range(output_length):
+        values.append(dut.scan_out.value)
+        await step_clock(dut)
+    dut.scan_en.value = 0
+    return values[::-1]
 
-    ######################
-    # TODO: YOUR CODE HERE 
-    ######################
-
-    pass       
 
 #-----------------------------------------------
 
