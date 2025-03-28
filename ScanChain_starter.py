@@ -7,7 +7,7 @@ from cocotb.triggers import Timer
 # to the filepath of the .log
 # file you are working with
 CHAIN_LENGTH = -1
-FILE_NAME    = ""
+FILE_NAME    = "adder/adder.log"
 
 
 
@@ -125,8 +125,7 @@ async def step_clock(dut):
     await Timer(10, units="ns")
     dut.clk.value = 0
     await Timer(10, units="ns")
-
-    
+   
 
 #-------------------------------------------------------------------
 
@@ -157,7 +156,7 @@ async def input_chain(dut, bit_list, ff_index):
     for n in bit_list[::-1]:
         dut.scan_in.value = n
         await step_clock(dut)
-    for _ in range(ff_index + 1 - len(bit_list)):
+    for _ in range(ff_index):
         await step_clock(dut)
     dut.scan_en.value = 0
 
@@ -168,7 +167,7 @@ async def input_chain(dut, bit_list, ff_index):
         
 async def output_chain_single(dut, ff_index):
     dut.scan_en.value = 1
-    for _ in range(CHAIN_LENGTH - 1 - ff_index):
+    for _ in range(CHAIN_LENGTH - ff_index):
         await step_clock(dut)
     val = dut.scan_out.value
     dut.scan_en.value = 0
@@ -184,11 +183,11 @@ async def output_chain_single(dut, ff_index):
 async def output_chain(dut, ff_index, output_length):
     dut.scan_en.value = 1
     values = list()
-    for _ in range(CHAIN_LENGTH - 1 - ff_index - output_length):
+    for _ in range(CHAIN_LENGTH - ff_index - output_length):
         await step_clock(dut)
     for _ in range(output_length):
-        values.append(dut.scan_out.value)
         await step_clock(dut)
+        values.append(dut.scan_out.value)
     dut.scan_en.value = 0
     return values[::-1]
 
@@ -206,7 +205,18 @@ async def test(dut):
 
     # Setup the scan chain object
     chain = setup_chain(FILE_NAME)
-
     CHAIN_LENGTH = chain.chain_length
 
-
+    # test addition
+    inputs = [(3, 4), (5, 2), (2, 1)]
+    for a, b in inputs:
+        a_str = [int(x) for x in bin(a)[2:]]
+        b_str = [int(x) for x in bin(b)[2:]]
+        bit_list = ([0] * (4 - len(a_str))) + a_str + ([0] * (4 - len(b_str))) + b_str
+        await input_chain(dut, bit_list, 5)
+        await step_clock(dut)
+        result = await output_chain(dut, 0, 5)
+        result = int("".join(map(str, result)), 2)
+        if result != a + b:
+            print(f"Failed test for inputs {a} and {b}. Expected {a + b}, got {result}")
+            assert(False)
