@@ -23,28 +23,28 @@ void Vtop___024root__trace_chg_0_sub_0(Vtop___024root* vlSelf, VerilatedVcd::Buf
     // Init
     uint32_t* const oldp VL_ATTR_UNUSED = bufp->oldp(vlSymsp->__Vm_baseCode + 1);
     // Body
-    bufp->chgCData(oldp+0,(vlSelf->a_in),4);
-    bufp->chgCData(oldp+1,(vlSelf->b_in),4);
-    bufp->chgBit(oldp+2,(vlSelf->clk));
-    bufp->chgBit(oldp+3,(vlSelf->scan_en));
-    bufp->chgBit(oldp+4,(vlSelf->scan_in));
-    bufp->chgBit(oldp+5,(vlSelf->scan_out));
-    bufp->chgCData(oldp+6,(vlSelf->x_out),5);
-    bufp->chgCData(oldp+7,(vlSelf->adder__DOT__a_in),4);
-    bufp->chgBit(oldp+8,(vlSelf->adder__DOT__a_reg__05b0__05d));
-    bufp->chgBit(oldp+9,(vlSelf->adder__DOT__a_reg__05b1__05d));
-    bufp->chgBit(oldp+10,(vlSelf->adder__DOT__a_reg__05b2__05d));
-    bufp->chgBit(oldp+11,(vlSelf->adder__DOT__a_reg__05b3__05d));
-    bufp->chgCData(oldp+12,(vlSelf->adder__DOT__b_in),4);
-    bufp->chgBit(oldp+13,(vlSelf->adder__DOT__b_reg__05b0__05d));
-    bufp->chgBit(oldp+14,(vlSelf->adder__DOT__b_reg__05b1__05d));
-    bufp->chgBit(oldp+15,(vlSelf->adder__DOT__b_reg__05b2__05d));
-    bufp->chgBit(oldp+16,(vlSelf->adder__DOT__b_reg__05b3__05d));
-    bufp->chgBit(oldp+17,(vlSelf->adder__DOT__clk));
-    bufp->chgBit(oldp+18,(vlSelf->adder__DOT__scan_en));
-    bufp->chgBit(oldp+19,(vlSelf->adder__DOT__scan_in));
-    bufp->chgBit(oldp+20,(vlSelf->adder__DOT__scan_out));
-    bufp->chgCData(oldp+21,(vlSelf->adder__DOT__x_out),5);
+    bufp->chgBit(oldp+0,(vlSelf->buf_en));
+    bufp->chgBit(oldp+1,(vlSelf->clk));
+    bufp->chgBit(oldp+2,(vlSelf->data_avail));
+    bufp->chgCData(oldp+3,(vlSelf->out_sel),2);
+    bufp->chgBit(oldp+4,(vlSelf->out_writing));
+    bufp->chgBit(oldp+5,(vlSelf->scan_en));
+    bufp->chgBit(oldp+6,(vlSelf->scan_in));
+    bufp->chgBit(oldp+7,(vlSelf->scan_out));
+    bufp->chgBit(oldp+8,(vlSelf->hidden_fsm__DOT__buf_en));
+    bufp->chgBit(oldp+9,(vlSelf->hidden_fsm__DOT__clk));
+    bufp->chgBit(oldp+10,(vlSelf->hidden_fsm__DOT__cur_state__05b0__05d));
+    bufp->chgBit(oldp+11,(vlSelf->hidden_fsm__DOT__cur_state__05b1__05d));
+    bufp->chgBit(oldp+12,(vlSelf->hidden_fsm__DOT__cur_state__05b2__05d));
+    bufp->chgBit(oldp+13,(vlSelf->hidden_fsm__DOT__data_avail));
+    bufp->chgBit(oldp+14,(vlSelf->hidden_fsm__DOT__nstate__05b0__05d));
+    bufp->chgBit(oldp+15,(vlSelf->hidden_fsm__DOT__nstate__05b1__05d));
+    bufp->chgBit(oldp+16,(vlSelf->hidden_fsm__DOT__nstate__05b2__05d));
+    bufp->chgCData(oldp+17,(vlSelf->hidden_fsm__DOT__out_sel),2);
+    bufp->chgBit(oldp+18,(vlSelf->hidden_fsm__DOT__out_writing));
+    bufp->chgBit(oldp+19,(vlSelf->hidden_fsm__DOT__scan_en));
+    bufp->chgBit(oldp+20,(vlSelf->hidden_fsm__DOT__scan_in));
+    bufp->chgBit(oldp+21,(vlSelf->hidden_fsm__DOT__scan_out));
 }
 
 void Vtop___024root__trace_cleanup(void* voidSelf, VerilatedVcd* /*unused*/) {
